@@ -1,0 +1,149 @@
+body {
+  font-family: Manrope, sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-container {
+  width: 100%;
+  max-width: 400px;
+  background-color: #0D0D15;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #13181F;
+  border-bottom: 1px solid #444;
+}
+
+.back-arrow {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.contact-info {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.contact-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  max-width: 80%;
+}
+
+.message.layla-message {
+  align-self: flex-start;
+  background-color: #FF137B4F;
+  outline: 1px solid #FF007080;
+  border-radius: 10px 10px 10px 0;
+  padding: 10px;
+  position: relative;
+}
+
+.message.user-message {
+  align-self: flex-end;
+  background-color: #008FFF38;
+  border: 1px solid #00A6FF;
+  border-radius: 10px 10px 0 10px;
+  padding: 10px;
+}
+
+.message p {
+  margin: 0;
+}
+
+.chat-input {
+  display: flex;
+  padding: 10px;
+  background-color: #121212;
+  border-top: 1px solid #444;
+}
+
+.chat-input input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #0E0E0E;
+  outline: none;
+  border: 1px solid #222222;
+  color: #FFFFFF;
+  font-family: Work sans, sans serif
+}
+
+.chat-input button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.message .action-text {
+    color: #FF0070; /* Cor para destacar ações */
+    font-weight: bold; /* Opcional: deixar em negrito */
+}
+
+
+ .message.user-message .action-text {
+    color: #0092FF; /* Cor para destacar ações */
+    font-weight: bold; /* Opcional: deixar em negrito */
+}
+
+.ban-warning {
+  background-color: #FF0000; /* Fundo vermelho */
+  color: #FFFFFF; /* Texto branco */
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.ban-warning h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.ban-warning p {
+  margin: 5px 0;
+}
+
+.ban-warning .terms-link {
+  color: #FFFFFF;
+  text-decoration: underline;
+  font-weight: bold;
+}
