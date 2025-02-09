@@ -125,12 +125,25 @@ body {
 }
 
 .ban-warning {
-  background-color: #FF0000; /* Fundo vermelho */
+  background-color: #0C0F16; /* Fundo vermelho */
   color: #FFFFFF; /* Texto branco */
   padding: 15px;
   border-radius: 10px;
   margin: 10px 0;
   text-align: center;
+  border: 1px solid #212034;
+  z-index: 99999;
+}
+
+.ban-warning[overflow] {
+  background-color: #0C0F16; /* Fundo vermelho */
+  color: #FFFFFF; /* Texto branco */
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px 0;
+  text-align: center;
+  z-index: 999999;
+  backdrop-filter: blur(5px)
 }
 
 .ban-warning h2 {
@@ -140,10 +153,11 @@ body {
 
 .ban-warning p {
   margin: 5px 0;
+  color: #39335A;
 }
 
 .ban-warning .terms-link {
-  color: #FFFFFF;
+  color: #605CE9;
   text-decoration: underline;
   font-weight: bold;
 }
