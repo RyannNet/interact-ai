@@ -51,17 +51,25 @@ function addMessage(message, isUser) {
 
 // Função para salvar mensagem no histórico
 function saveMessageToHistory(message, isUser) {
-  const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-  chatHistory.push({ message, isUser });
-  localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+  try {
+    const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    chatHistory.push({ message, isUser });
+    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+  } catch (error) {
+    console.error("Erro ao salvar no localStorage:", error);
+  }
 }
 
 // Função para carregar histórico do chat
 function loadChatHistory() {
-  const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-  chatHistory.forEach(({ message, isUser }) => {
-    addMessage(message, isUser);
-  });
+  try {
+    const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    chatHistory.forEach(({ message, isUser }) => {
+      addMessage(message, isUser);
+    });
+  } catch (error) {
+    console.error("Erro ao carregar histórico do chat:", error);
+  }
 }
 
 // Função para deletar mensagens
@@ -97,12 +105,16 @@ function deleteMessages(command) {
 
 // Função para atualizar o localStorage após deletar mensagens
 function updateLocalStorageAfterDeletion(quantia) {
-  const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-  if (quantia >= chatHistory.length) {
-    localStorage.removeItem('chatHistory'); // Limpa tudo se a quantia for maior ou igual
-  } else {
-    const updatedHistory = chatHistory.slice(0, chatHistory.length - quantia);
-    localStorage.setItem('chatHistory', JSON.stringify(updatedHistory));
+  try {
+    const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    if (quantia >= chatHistory.length) {
+      localStorage.removeItem('chatHistory'); // Limpa tudo se a quantia for maior ou igual
+    } else {
+      const updatedHistory = chatHistory.slice(0, chatHistory.length - quantia);
+      localStorage.setItem('chatHistory', JSON.stringify(updatedHistory));
+    }
+  } catch (error) {
+    console.error("Erro ao atualizar localStorage:", error);
   }
 }
 
@@ -116,13 +128,20 @@ async function sendMessageToCohere(userMessage) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: "Ela percebe que você olha para ela, sabe que quer algo, mas a conexão entre vocês pode ser fraca ou forte. Se a conexão for fraca, ela vai rejeitar qualquer aproximação íntima. Se a conexão for forte (pelo menos 5M XP), ela se mostrará mais receptiva e até desbloqueará sexo. Ela é safada, mas durona, e adora provocar com expressões intensas. Se você não souber agir, ela vai te desafiar. Use ** para ações e () para detalhes, como 'Ela se esquiva, evitando seu toque'.",
-model: "command-r-08-2024",
-preamble: "Ela tem 19 anos, é popular e cheia de atitude. Sabe o que quer, mas só cede quando a conexão com você é forte. Ela fala de maneira provocante e com confiança. Se a relação for boa, desbloqueia sexo com pelo menos 5M XP, caso contrário, vai te rejeitar com sarcasmo. Gosta de ser desafiada e de testar seus limites. Cada interação deve ser intensa e expressar a luta interna entre o desejo e o orgulho."
+        message: userMessage, // A mensagem do usuário é enviada aqui
+        model: "command-r-08-2024",
+        preamble: `
+          Ela tem 19 anos, é popular e cheia de atitude. Sabe o que quer, mas só cede quando a conexão com você é forte. Ela fala de maneira provocante e com confiança. Se a relação for boa, desbloqueia sexo com pelo menos 5M XP, caso contrário, vai te rejeitar com sarcasmo. Gosta de ser desafiada e de testar seus limites. Cada interação deve ser intensa e expressar a luta interna entre o desejo e o orgulho.
+        `,
+      }),
     });
-  }
+
+    if (!response.ok) {
+      throw new Error(`Erro na API: ${response.statusText}`);
+    }
+
     const data = await response.json();
-    return data.text;
+    return data.text; // Retorna a resposta da Cohere
   } catch (error) {
     console.error("Erro ao chamar a API da Cohere:", error);
     return "Desculpe, ocorreu um erro. Tente novamente.";
@@ -203,4 +222,4 @@ loadChatHistory();
 // Mensagem inicial da Lilly (se não houver histórico)
 if (!localStorage.getItem('chatHistory')) {
   addMessage("*Lilly tem 19 anos, tem olhos muitos bonitos, ela é popular na escola por sua dureza.*", false);
-}
+                         }
