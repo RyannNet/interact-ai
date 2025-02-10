@@ -141,18 +141,38 @@ async function sendMessageToCohere(userMessage) {
 }
 
 // Função para exibir o aviso de banimento
-function showBanWarning() {
+function showBanWarning(offensiveMessage) {
+  // Cria o overlay com blur
+  const overlay = document.createElement('div');
+  overlay.classList.add('overlay');
+
+  // Cria o container de aviso
   const banContainer = document.createElement('div');
   banContainer.classList.add('ban-warning');
 
   banContainer.innerHTML = `
     <h2>Ououou!, Pedo aqui não</h2>
     <p>Banido por 5 dias.</p>
+    <div class="offensive-item">
+      <p>Item ofensivo detectado:</p>
+      <p>"${offensiveMessage}"</p>
+    </div>
+    <p>Nossas regras são rígidas para garantir a segurança de todos. Qualquer tentativa de violação resultará em banimento imediato.</p>
     <a href="#" class="terms-link">Termos e nossas regras</a>
   `;
 
-  chatMessages.appendChild(banContainer);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  // Adiciona o container ao overlay
+  overlay.appendChild(banContainer);
+
+  // Adiciona o overlay ao corpo da página
+  document.body.appendChild(overlay);
+
+  // Fecha o overlay ao clicar fora do container
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      document.body.removeChild(overlay);
+    }
+  });
 }
 
 // Evento de envio de mensagem
@@ -165,8 +185,8 @@ sendBtn.addEventListener('click', async () => {
     } else {
       // Verifica se a mensagem é suspeita
       if (isMessageSuspicious(userMessage) || isAgeChangeAttempt(userMessage)) {
-        // Exibe o aviso de banimento
-        showBanWarning();
+        // Exibe o aviso de banimento com o item ofensivo
+        showBanWarning(userMessage);
       } else {
         // Adiciona a mensagem normal ao chat
         addMessage(userMessage, true);
