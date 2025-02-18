@@ -1,5 +1,5 @@
 // Chave de API da Cohere (substitua pela sua chave)
-const COHERE_API_KEY = "rTYHxbXFpmbHNA5MQYBebTDPUTFPkWNWrrVIUh0R";
+const COHERE_API_KEY = "sZiSEdKil0oFMd4CWn1bpSOBm9o8ql6Y5LYgIjce";
 
 // Elementos do DOM
 const chatMessages = document.getElementById('chat-messages');
